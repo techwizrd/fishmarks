@@ -4,26 +4,44 @@ Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
 bashmarks and bookmarks added using fishmarks are also available in bashmarks.
 
 ## Installation
-1. `git clone http://github.com/techwizrd/fishmarks.git`
-2.  Source `fishmarks/marks.fish` in your `config.fish`
-    (For those new to the Fish shell, insert `. /path/to/fishmarks/marks.fish` into your `~/.config/fish/config.fish`)
+To install fishmarks automatically, paste the following in your terminal.
+
+```fish
+    curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
+```
+
+To install fishmarks manually:
+
+1.  Clone fishmarks into `~/.fishmarks`
+
+```fish
+$ git clone http://github.com/techwizrd/fishmarks.git
+```
+
+2.  Source `fishmarks/marks.fish` in your `config.fish` by inserting the
+    following into your `~/.config/fish/config.fish`
+
+```fish
+# Load fishmarks (http://github.com/techwizrd/fishmarks)
+. ~/.fishmarks/marks.fish
+```
 
 ## Usage
 
 ### Commands
 
-``
+```
 s <bookmark_name> - Saves the current directory as "bookmark_name"
 g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"
 p <bookmark_name> - Prints the directory associated with "bookmark_name"
 d <bookmark_name> - Deletes the bookmark
 l - Lists all available bookmarks'
-``
+```
 
 ### Configuration Variables
 All of these must be set before `virtual.fish` is sourced in your `~/.config/fish/config.fish`.
 
-* `SDIRS` (default: `~/.sdirs`) - where all your bookmarks are kept.
+* `SDIRS` - (default: `~/.sdirs`) where all your bookmarks are kept.
 * `NO_FISHMARKS_COMPAT_ALIASES` - set this to turn off the bashmark-compatible aliases (e.g., `p` for `print_bookmark`)
 
 
