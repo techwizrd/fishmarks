@@ -12,6 +12,8 @@ else
     #set -x FISHMARKS (readlink -f '~/.fishmarks/marks.fish' | sed "s#^$HOME#\$HOME#g")
     set -x FISHMARKS "\$HOME/.fishmarks/marks.fish"
 end
+mkdir -p ~/.config/fish
+touch ~/.config/fish/config.fish
 if grep -Fxq ". $FISHMARKS" $HOME/.config/fish/config.fish
     echo "Fishmarks has already been installed"
 else

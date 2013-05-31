@@ -7,7 +7,7 @@ bashmarks and bookmarks added using fishmarks are also available in bashmarks.
 To install fishmarks automatically, paste the following in your terminal.
 
 ```fish
-    curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
+curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
 ```
 
 To install fishmarks manually:
@@ -50,9 +50,7 @@ Copyright 2013 Kunal Sarkhel
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License.  You may obtain a copy of the
-License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
+License at `http://www.apache.org/licenses/LICENSE-2.0`.
 
 Unless required by applicable law or agreed to in writing, software distributed
 under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
