@@ -38,6 +38,10 @@ function save_bookmark --description "Save the current directory as a bookmark"
         echo 'bookmark name required'
         return 1
     end
+    if echo $argv[1] | grep -q "-"
+        echo -e "\033[0;31mERROR: Hyphens are not allowed in bookmark names. Only alphanumeric characters and underscores are allowed.\033[00m"
+        return 1
+    end
     if _valid_bookmark $argv[1];
         sed -i "/DIR_$argv[1]=/d" $SDIRS
     end
