@@ -5,11 +5,9 @@ else if [ -f "fishmarks/marks.fish" ]
     set -x FISHMARKS (readlink -f 'fishmarks/marks.fish' | sed "s#^$HOME#\$HOME#g")
 else if not [ -f "$HOME/.fishmarks/marks.fish" ]
     git clone http://github.com/techwizrd/fishmarks.git $HOME/.fishmarks
-    #set -x FISHMARKS (readlink -f '~/.fishmarks/marks.fish' | sed "s#^$HOME#\$HOME#g")
     set -x FISHMARKS "\$HOME/.fishmarks/marks.fish"
 else
     cd $HOME/.fishmarks; and git pull
-    #set -x FISHMARKS (readlink -f '~/.fishmarks/marks.fish' | sed "s#^$HOME#\$HOME#g")
     set -x FISHMARKS "\$HOME/.fishmarks/marks.fish"
 end
 mkdir -p ~/.config/fish
