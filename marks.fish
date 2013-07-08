@@ -43,7 +43,7 @@ function save_bookmark --description "Save the current directory as a bookmark"
         return 1
     end
     if _valid_bookmark $argv[1];
-        sed -i "/DIR_$argv[1]=/d" $SDIRS
+        sed -i='' "/DIR_$argv[1]=/d" $SDIRS
     end
     set -l pwd (pwd | sed "s#^$HOME#\$HOME#g")
     echo "export DIR_$argv[1]=\"$pwd\"" >> $SDIRS
@@ -93,7 +93,7 @@ function delete_bookmark --description "Delete a bookmark"
         echo -e "\033[0;31mERROR: bookmark '$argv[1]' does not exist\033[00m"
         return 1
     else
-        sed -i "/DIR_$argv[1]=/d" $SDIRS
+        sed -i='' "/DIR_$argv[1]=/d" $SDIRS
         _update_completions
     end
 end
