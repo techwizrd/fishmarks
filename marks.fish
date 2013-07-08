@@ -35,7 +35,7 @@ end
 
 function save_bookmark --description "Save the current directory as a bookmark"
     if [ (count $argv) -lt 1 ]
-        echo 'bookmark name required'
+        echo -e "\033[0;31mERROR: bookmark name required\033[00m"
         return 1
     end
     if echo $argv[1] | grep -q "-"
@@ -53,21 +53,21 @@ end
 
 function go_to_bookmark --description "Go to (cd) to the directory associated with a bookmark"
     if [ (count $argv) -lt 1 ]
-        echo -e "\033[0;31mWARNING: '' bashmark does not exist\033[00m"
+        echo -e "\033[0;31mERROR: '' bookmark does not exist\033[00m"
         return 1
     end
     if not _check_help $argv[1];
         cat $SDIRS | grep "^export DIR_" | sed "s/^export /set -x /" | sed "s/=/ /" | .
         set -l target (env | grep "^DIR_$argv[1]=" | cut -f2 -d "=")
         if [ ! -n "$target" ]
-            echo -e "\033[0;31mWARNING: '$argv[1]' bashmark does not exist\033[00m"
+            echo -e "\033[0;31mERROR: '$argv[1]' bookmark does not exist\033[00m"
             return 1
         end
         if [ -d "$target" ]
             cd "$target"
             return 0
         else
-            echo -e "\033[0;31mWARNING: '$target' does not exist\033[00m"
+            echo -e "\033[0;31mERROR: '$target' does not exist\033[00m"
             return 1
         end
     end
@@ -75,7 +75,7 @@ end
 
 function print_bookmark --description "Print the directory associated with a bookmark"
     if [ (count $argv) -lt 1 ]
-        echo ''
+        echo -e "\033[0;31mERROR: bookmark name required\033[00m"
         return 1
     end
     if not _check_help $argv[1];
@@ -86,10 +86,11 @@ end
 
 function delete_bookmark --description "Delete a bookmark"
     if [ (count $argv) -lt 1 ]
-        echo 'bookmark name required'
+        echo -e "\033[0;31mERROR: bookmark name required\033[00m"
         return 1
     end
     if not _valid_bookmark $argv[1];
+        echo -e "\033[0;31mERROR: bookmark '$argv[1]' does not exist\033[00m"
         return 1
     else
         sed -i "/DIR_$argv[1]=/d" $SDIRS
