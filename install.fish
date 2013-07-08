@@ -1,4 +1,10 @@
 #!/usr/bin/env fish
+set -x required_version 2
+set -x fish_version (fish --version ^| cut -d ' ' -f 3 | cut -d . -f 1)
+if [ $required_version -gt $fish_version ]
+    echo "Fish shell version $required_version is require for this script. You can obtain the latest version at http://fishshell.com/"
+    exit 1
+end
 if [ -f "marks.fish" ]
     set -x FISHMARKS (readlink -f 'marks.fish' | sed "s#^$HOME#\$HOME#g")
 else if [ -f "fishmarks/marks.fish" ]
