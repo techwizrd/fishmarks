@@ -44,6 +44,19 @@ All of these must be set before `virtual.fish` is sourced in your `~/.config/fis
 * `SDIRS` - (default: `~/.sdirs`) where all your bookmarks are kept.
 * `NO_FISHMARKS_COMPAT_ALIASES` - set this to turn off the bashmark-compatible aliases (e.g., `p` for `print_bookmark`)
 
+### Example
+
+```
+[~]$ cd /var/www/
+[/var/www]$ s webfolder
+[/usr/local/lib]$ cd /usr/local/lib/
+[/usr/local/lib]$ s locallib
+[/usr/local/lib]$ l
+locallib             /usr/local/lib
+webfolder            /var/www
+[/usr/local/lib]$ g webfolder
+[/var/www]$
+```
 
 ## License
 Copyright 2013 Kunal Sarkhel
