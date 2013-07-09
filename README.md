@@ -4,13 +4,16 @@ Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
 bashmarks and bookmarks added using fishmarks are also available in bashmarks.
 
 ## Installation
+
+### Automatic Installation
+
 To install fishmarks automatically, paste the following in your terminal.
 
 ```fish
 curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
 ```
 
-## Updates
+### Manual Installation
 
 To install fishmarks manually:
 
@@ -27,6 +30,7 @@ $ git clone http://github.com/techwizrd/fishmarks.git
 # Load fishmarks (http://github.com/techwizrd/fishmarks)
 . ~/.fishmarks/marks.fish
 ```
+### Update to the latest version
 
 To update to the latest version of fishmarks:
 
