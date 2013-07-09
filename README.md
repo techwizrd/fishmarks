@@ -10,6 +10,8 @@ To install fishmarks automatically, paste the following in your terminal.
 curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
 ```
 
+## Updates
+
 To install fishmarks manually:
 
 1.  Clone fishmarks into `~/.fishmarks`
