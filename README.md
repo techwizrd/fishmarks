@@ -26,6 +26,22 @@ $ git clone http://github.com/techwizrd/fishmarks.git
 . ~/.fishmarks/marks.fish
 ```
 
+To update to the latest version of fishmarks:
+
+1.  Navigate to the directory `~/.fishmarks`
+
+2.  Type the following to fetch the new version:
+
+```fish
+git fetch --all
+```
+3.  Type the following to force the update:
+
+```fish
+git reset --hard origin/master
+```
+
+
 ## Usage
 
 ### Commands
