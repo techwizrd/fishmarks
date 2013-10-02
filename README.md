@@ -99,18 +99,6 @@ I recommend the following guides on writing good commit messages:
 - [Proper Git Commit Messages and an Elegant Git History](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
 
-### Todo
-
-- [ ] Add a bashmark compatible mode that will restrict bookmark names in favor of bashmarks interoperability
-- [ ] Add stricter error checking to prevent use of illegal characters in bookmark names
-- [ ] Add comprehensive unit tests for every function
-- [ ] Package fishmarks for Debian systems package by creating a DEB package
-- [ ] Package fishmarks for Red Hat sytsems package by creating an RPM
-- [ ] Package fishmarks for Arch Linux by writing a [PKGBUILD](https://aur.archlinux.org/) for [AUR](https://aur.archlinux.org/)
-- [ ] Package fishmarks for OS X systems by creating .dmg file
-- [ ] Package fishmarks for [Homebrew](http://brew.sh/) on OS X systems by [writing a formula](https://github.com/mxcl/homebrew/wiki/Formula-Cookbook)
-- [ ] Create an Ubuntu [PPA](https://help.launchpad.net/Packaging/PPA) that is in sync with the Git version
-
 ## License
 Copyright 2013 Kunal Sarkhel
 
