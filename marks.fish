@@ -38,8 +38,8 @@ function save_bookmark --description "Save the current directory as a bookmark"
         echo -e "\033[0;31mERROR: bookmark name required\033[00m"
         return 1
     end
-    if echo $argv[1] | grep -q "-"
-        echo -e "\033[0;31mERROR: Hyphens are not allowed in bookmark names. Only alphanumeric characters and underscores are allowed.\033[00m"
+    if not echo $argv[1] | grep -q "[a-zA-Z_]+[a-zA-Z0-9_]*"
+        echo -e "\033[0;31mERROR: Bookmark names may only contain alphanumeric characters and underscores.\033[00m"
         return 1
     end
     if _valid_bookmark $argv[1];
