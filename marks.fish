@@ -32,13 +32,12 @@ if not set -q NO_FISHMARKS_COMPAT_ALIASES
     alias l list_bookmarks
 end
 
-
 function save_bookmark --description "Save the current directory as a bookmark"
     if [ (count $argv) -lt 1 ]
         echo -e "\033[0;31mERROR: bookmark name required\033[00m"
         return 1
     end
-    if not echo $argv[1] | grep -q "[a-zA-Z_]+[a-zA-Z0-9_]*"
+    if not echo $argv[1] | grep -q "^[a-zA-Z0-9_]*\$";
         echo -e "\033[0;31mERROR: Bookmark names may only contain alphanumeric characters and underscores.\033[00m"
         return 1
     end
