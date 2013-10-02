@@ -85,6 +85,32 @@ webfolder            /var/www
 [/var/www]$
 ```
 
+### Contributing
+
+*Have you noticed any bugs or issues with fishmarks? Do you have any features you would like to see added?*
+
+1. [Check on Github](https://github.com/techwizrd/fishmarks/issues?state=open) to see whether anyone else has encountered the same issue or has the same feature request. If someone someone has encountered the same issue or has the same feature request, comment to let me know that it affects you too.
+2. If no one has encountered the same issue, [file an issue](https://github.com/techwizrd/fishmarks/issues?state=open) on Github with the "bug" label, your operating system version, fish shell version, clear steps describing how to reproduce the error. If no one has requested the same feature, [file an issue](https://github.com/techwizrd/fishmarks/issues?state=open) on Github with the "enhancement" label and a brief, clear description of your feature and why it would make a great addition to fishmarks.
+3. Once you have filed the issue, if you would like to fix the issue or add the feature yourself, assign the issue to yourself on Github and fork the repository. Clone your fork and make your changes, commit them, and push them to Github. After you have pushed all your changes to Github, send me a merge request and comment on the issue to let me know that your merge request fixes the bug or adds the requested feature. Please make sure to write good commit messages and keep your history clean and understandable. Good commit messages and clean history make it easier for me to merge your changes and keep the history nice and useful.
+
+I recommend the following guides on writing good commit messages:
+- [GIT Commit Good Practice](https://wiki.openstack.org/wiki/GitCommitMessages)
+- [A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+- [Proper Git Commit Messages and an Elegant Git History](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+
+
+### Todo
+
+- [ ] Add a bashmark compatible mode that will restrict bookmark names in favor of bashmarks interoperability
+- [ ] Add stricter error checking to prevent use of illegal characters in bookmark names
+- [ ] Add comprehensive unit tests for every function
+- [ ] Package fishmarks for Debian systems package by creating a DEB package
+- [ ] Package fishmarks for Red Hat sytsems package by creating an RPM
+- [ ] Package fishmarks for Arch Linux by writing a [PKGBUILD](https://aur.archlinux.org/) for [AUR](https://aur.archlinux.org/)
+- [ ] Package fishmarks for OS X systems by creating .dmg file
+- [ ] Package fishmarks for [Homebrew](http://brew.sh/) on OS X systems by [writing a formula](https://github.com/mxcl/homebrew/wiki/Formula-Cookbook)
+- [ ] Create an Ubuntu [PPA](https://help.launchpad.net/Packaging/PPA) that is in sync with the Git version
+
 ## License
 Copyright 2013 Kunal Sarkhel
 
