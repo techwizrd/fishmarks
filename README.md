@@ -13,6 +13,8 @@ To install fishmarks automatically, paste the following in your terminal.
 curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
 ```
 
+Please note, however, that you should _never_ install things by piping untrusted "install" scripts downloaded through ``curl`` directly into your shell (be it ``bash`` or ``fish``). Even if you read through the install script and think you understand it, you could be prone to a [man-in-the-middle](http://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack or any number of security vulnerabilities. While manual installations are tedious, they are recommended for any situations where security is a concern (and it should almost always be a concern).
+
 ### Manual Installation
 
 To install fishmarks manually:
