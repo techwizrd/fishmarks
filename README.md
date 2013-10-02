@@ -36,14 +36,17 @@ $ git clone http://github.com/techwizrd/fishmarks.git
 
 To update to the latest version of fishmarks:
 
-1.  Navigate to the directory `~/.fishmarks`
+1.  Navigate to the directory where your fishmarks code is kept (It is located in `~/.fishmarks` by default)
+```fish
+cd ~/.fishmarks
+```
 
-2.  Type the following to fetch the new version:
+2.  Use git to fetch the latest version:
 
 ```fish
 git fetch --all
 ```
-3.  Type the following to force the update:
+3.  Remove any changes and force update to the latest version from the Git repository:
 
 ```fish
 git reset --hard origin/master
