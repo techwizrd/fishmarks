@@ -33,19 +33,19 @@ if not set -q NO_FISHMARKS_COMPAT_ALIASES
 end
 
 function save_bookmark --description "Save the current directory as a bookmark"
+    set -l bn $argv[1]
     if [ (count $argv) -lt 1 ]
-        echo -e "\033[0;31mERROR: bookmark name required\033[00m"
-        return 1
+        set bn (basename (pwd))
     end
-    if not echo $argv[1] | grep -q "^[a-zA-Z0-9_]*\$";
+    if not echo $bn | grep -q "^[a-zA-Z0-9_]*\$";
         echo -e "\033[0;31mERROR: Bookmark names may only contain alphanumeric characters and underscores.\033[00m"
         return 1
     end
-    if _valid_bookmark $argv[1];
-        sed -i='' "/DIR_$argv[1]=/d" $SDIRS
+    if _valid_bookmark $bn;
+        sed -i='' "/DIR_$bn=/d" $SDIRS
     end
     set -l pwd (pwd | sed "s#^$HOME#\$HOME#g")
-    echo "export DIR_$argv[1]=\"$pwd\"" >> $SDIRS
+    echo "export DIR_$bn=\"$pwd\"" >> $SDIRS
     _update_completions
     return 0
 end
