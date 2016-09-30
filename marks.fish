@@ -35,7 +35,7 @@ end
 function save_bookmark --description "Save the current directory as a bookmark"
     set -l bn $argv[1]
     if [ (count $argv) -lt 1 ]
-        set bn (basename (pwd))
+        set bn (string replace -r [^a-zA-Z0-9] _ (basename (pwd)))
     end
     if not echo $bn | grep -q "^[a-zA-Z0-9_]*\$";
         echo -e "\033[0;31mERROR: Bookmark names may only contain alphanumeric characters and underscores.\033[00m"
