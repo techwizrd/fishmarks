@@ -92,7 +92,7 @@ function delete_bookmark --description "Delete a bookmark"
         echo -e "\033[0;31mERROR: bookmark '$argv[1]' does not exist\033[00m"
         return 1
     else
-        sed -i='' "/DIR_$argv[1]=/d" $SDIRS
+        sed --follow-symlinks -i='' "/DIR_$argv[1]=/d" $SDIRS
         _update_completions
     end
 end
