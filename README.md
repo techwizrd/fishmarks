@@ -30,7 +30,7 @@ $ git clone http://github.com/techwizrd/fishmarks.git
 
 ```fish
 # Load fishmarks (http://github.com/techwizrd/fishmarks)
-. ~/.fishmarks/marks.fish
+source ~/.fishmarks/marks.fish
 ```
 ### Update to the latest version
 
