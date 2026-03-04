@@ -70,9 +70,9 @@ end
 
 function _test_legacy_file_compatibility
     command mkdir -p -- "$HOME/legacy/location"
-    printf 'export DIR_legacy="\\$HOME/legacy/location"\n' > "$SDIRS"
-    printf 'export DIR_absolute="/tmp"\n' >> "$SDIRS"
-    printf 'not a bookmark line\n' >> "$SDIRS"
+    printf 'export DIR_legacy="\\$HOME/legacy/location"\n' >"$SDIRS"
+    printf 'export DIR_absolute="/tmp"\n' >>"$SDIRS"
+    printf 'not a bookmark line\n' >>"$SDIRS"
 
     set -l legacy_value (print_bookmark legacy)
     _assert_status 0 $status 'legacy bookmark is parsed'
@@ -80,12 +80,12 @@ function _test_legacy_file_compatibility
 
     set -l absolute_value (print_bookmark absolute)
     _assert_status 0 $status 'absolute legacy bookmark is parsed'
-    _assert_eq '/tmp' "$absolute_value" 'absolute path is preserved'
+    _assert_eq /tmp "$absolute_value" 'absolute path is preserved'
 end
 
 function _test_invalid_name_rejected
     _prepare_dir "$HOME/work/invalid"
-    save_bookmark 'bad-name' >/dev/null 2>/dev/null
+    save_bookmark bad-name >/dev/null 2>/dev/null
     _assert_status 1 $status 'invalid bookmark names are rejected'
 end
 

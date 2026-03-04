@@ -10,5 +10,5 @@ function _fishmarks_entries
         set -l name "$entry[2]"
         set -l value (_fishmarks_decode_path "$entry[3]")
         printf '%s=%s\n' "$name" "$value"
-    end < "$SDIRS"
+    end <"$SDIRS"
 end

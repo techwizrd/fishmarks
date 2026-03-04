@@ -26,7 +26,7 @@ set -l escaped_source (string replace -- "$HOME" '$HOME' "$source_file")
 
 command mkdir -p -- "$conf_d_dir"
 
-printf '# Load fishmarks (https://github.com/techwizrd/fishmarks)\n' > "$conf_file"
-printf 'source %s\n' "$escaped_source" >> "$conf_file"
+printf '# Load fishmarks (https://github.com/techwizrd/fishmarks)\n' >"$conf_file"
+printf 'source %s\n' "$escaped_source" >>"$conf_file"
 
 echo "Fishmarks has been installed to $conf_file"

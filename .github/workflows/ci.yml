@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install fish
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fish
+
+      - name: Validate fish scripts
+        run: fish tests/check.fish
+
+      - name: Run test suite
+        run: fish tests/run.fish
+
+      - name: Smoke test installer
+        run: |
+          TEST_HOME=$(mktemp -d)
+          HOME="$TEST_HOME" fish install.fish
+          test -f "$TEST_HOME/.config/fish/conf.d/fishmarks.fish"

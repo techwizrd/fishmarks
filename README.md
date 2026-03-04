@@ -100,6 +100,28 @@ Run the test suite with:
 fish tests/run.fish
 ```
 
+Run syntax and formatting checks with:
+
+```fish
+fish tests/check.fish
+```
+
+## Development workflow
+
+Install [prek](https://prek.j178.dev/latest/) (or pre-commit) hooks locally:
+
+```fish
+prek install
+```
+
+Run all hooks on demand:
+
+```fish
+prek run --all-files
+```
+
+GitHub Actions CI runs the same checks (`tests/check.fish`, `tests/run.fish`) and an installer smoke test on every push and pull request.
+
 ### Contributing
 
 *Have you noticed any bugs or issues with fishmarks? Do you have any features you would like to see added?*

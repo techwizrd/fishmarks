@@ -16,7 +16,7 @@
 
 set -l fishmarks_root (path dirname -- (status filename))
 
-if test "$fishmarks_root" = '/'; and test -f './functions/save_bookmark.fish'
+if test "$fishmarks_root" = /; and test -f './functions/save_bookmark.fish'
     set fishmarks_root '.'
 end
 
