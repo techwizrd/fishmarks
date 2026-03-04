@@ -1,6 +1,6 @@
 # fishmarks
 Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
-[Fish shell](http://fishshell.com/). Fishmarks is compatible with your existing
+[Fish shell](https://fishshell.com/). Fishmarks is compatible with your existing
 bashmarks and bookmarks added using fishmarks are also available in bashmarks.
 
 ## Installation
@@ -10,10 +10,18 @@ bashmarks and bookmarks added using fishmarks are also available in bashmarks.
 To install fishmarks automatically, paste the following in your terminal.
 
 ```fish
-curl -L https://github.com/techwizrd/fishmarks/raw/master/install.fish | fish
+curl -fsSL https://raw.githubusercontent.com/techwizrd/fishmarks/master/install.fish | fish
 ```
 
-Please note, however, that you should _never_ install things by piping untrusted "install" scripts downloaded through ``curl`` directly into your shell (be it ``bash`` or ``fish``). Even if you read through the install script and think you understand it, you could be prone to a [man-in-the-middle](http://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack or any number of security vulnerabilities. While manual installations are tedious, they are recommended for any situations where security is a concern (and it should almost always be a concern).
+Please note, however, that you should _never_ install things by piping untrusted "install" scripts downloaded through ``curl`` directly into your shell (be it ``bash`` or ``fish``). Even if you read through the install script and think you understand it, you could be prone to a [man-in-the-middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack or any number of security vulnerabilities. While manual installations are tedious, they are recommended for any situations where security is a concern (and it should almost always be a concern).
+
+### Fisher Installation
+
+If you use [Fisher](https://github.com/jorgebucaran/fisher), install fishmarks with:
+
+```fish
+fisher install techwizrd/fishmarks
+```
 
 ### Manual Installation
 
@@ -22,15 +30,14 @@ To install fishmarks manually:
 1.  Clone fishmarks into `~/.fishmarks`
 
 ```fish
-$ git clone http://github.com/techwizrd/fishmarks.git
+$ git clone https://github.com/techwizrd/fishmarks.git ~/.fishmarks
 ```
 
-2.  Source `fishmarks/marks.fish` in your `config.fish` by inserting the
-    following into your `~/.config/fish/config.fish`
+2.  Source `~/.fishmarks/marks.fish` from a file in `~/.config/fish/conf.d/`
 
 ```fish
-# Load fishmarks (http://github.com/techwizrd/fishmarks)
-source ~/.fishmarks/marks.fish
+mkdir -p ~/.config/fish/conf.d
+printf '# Load fishmarks (https://github.com/techwizrd/fishmarks)\nsource ~/.fishmarks/marks.fish\n' > ~/.config/fish/conf.d/fishmarks.fish
 ```
 ### Update to the latest version
 
@@ -46,10 +53,10 @@ cd ~/.fishmarks
 ```fish
 git fetch --all
 ```
-3.  Remove any changes and force update to the latest version from the Git repository:
+3.  Pull the latest version:
 
 ```fish
-git reset --hard origin/master
+git pull --ff-only
 ```
 
 
@@ -66,7 +73,7 @@ l - Lists all available bookmarks'
 ```
 
 ### Configuration Variables
-All of these must be set before `virtual.fish` is sourced in your `~/.config/fish/config.fish`.
+All of these must be set before `marks.fish` is sourced in your fish startup files.
 
 * `SDIRS` - (default: `~/.sdirs`) where all your bookmarks are kept.
 * `NO_FISHMARKS_COMPAT_ALIASES` - set this to turn off the bashmark-compatible aliases (e.g., `p` for `print_bookmark`)
@@ -85,6 +92,14 @@ webfolder            /var/www
 [/var/www]$
 ```
 
+## Running tests
+
+Run the test suite with:
+
+```fish
+fish tests/run.fish
+```
+
 ### Contributing
 
 *Have you noticed any bugs or issues with fishmarks? Do you have any features you would like to see added?*
@@ -95,8 +110,8 @@ webfolder            /var/www
 
 I recommend the following guides on writing good commit messages:
 - [GIT Commit Good Practice](https://wiki.openstack.org/wiki/GitCommitMessages)
-- [A Note About Git Commit Messages](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
-- [Proper Git Commit Messages and an Elegant Git History](http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+- [A Note About Git Commit Messages](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
+- [Proper Git Commit Messages and an Elegant Git History](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html)
 
 
 ## License
@@ -104,7 +119,7 @@ Copyright 2013 Kunal Sarkhel
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
 this file except in compliance with the License.  You may obtain a copy of the
-License at `http://www.apache.org/licenses/LICENSE-2.0`.
+License at `https://www.apache.org/licenses/LICENSE-2.0`.
 
 Unless required by applicable law or agreed to in writing, software distributed
 under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
