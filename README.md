@@ -1,7 +1,7 @@
 # fishmarks
-[![CI](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml)
-[![Latest Release](https://img.shields.io/github/v/release/techwizrd/fishmarks)](https://github.com/techwizrd/fishmarks/releases)
-[![License](https://img.shields.io/github/license/techwizrd/fishmarks)](LICENSE)
+[![CI](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml/badge.svg?branch=fish-modernization)](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml?query=branch%3Afish-modernization)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
+[![SemVer](https://img.shields.io/badge/versioning-semver-3f4551)](https://semver.org/)
 [![Fish 3+](https://img.shields.io/badge/fish-3%2B-4AAE46)](https://fishshell.com/)
 
 Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
