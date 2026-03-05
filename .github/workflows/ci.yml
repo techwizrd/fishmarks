@@ -72,16 +72,17 @@ jobs:
 
       - name: Install plugin with fundle
         run: |
-          set -gx HOME (mktemp -d)
           command mkdir -p -- "$HOME/.config/fish/functions"
           curl -fsSL https://raw.githubusercontent.com/danhper/fundle/f4b39217e135fd209bd4e055eca8d32decdd91e0/functions/fundle.fish -o "$HOME/.config/fish/functions/fundle.fish"
+          source "$HOME/.config/fish/functions/fundle.fish"
 
-          printf "fundle plugin 'techwizrd/fishmarks' --url '%s'\n" "$GITHUB_WORKSPACE" > "$HOME/.config/fish/config.fish"
-          printf 'fundle init\n' >> "$HOME/.config/fish/config.fish"
+          set -l fundle_config (mktemp)
+          printf "fundle plugin 'techwizrd/fishmarks' --url '%s'\n" "$GITHUB_WORKSPACE" > "$fundle_config"
+          printf 'fundle init\n' >> "$fundle_config"
 
-          source "$HOME/.config/fish/config.fish"
+          source "$fundle_config"
           fundle install
-          source "$HOME/.config/fish/config.fish"
+          source "$fundle_config"
 
           type -q save_bookmark
           type -q go_to_bookmark
