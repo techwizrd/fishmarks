@@ -26,6 +26,10 @@ function _assert_status --argument-names expected actual message
     _assert_eq "$expected" "$actual" "$message"
 end
 
+function _assert_true --argument-names status_value message
+    _assert_status 0 "$status_value" "$message"
+end
+
 function _prepare_dir --argument-names dir_path
     command mkdir -p -- "$dir_path"
     cd -- "$dir_path"
@@ -107,9 +111,20 @@ function _test_shell_escaped_paths
         end
     end <"$SDIRS"
 
-    set -l expected_encoded (_fishmarks_encode_path "$special_path")
-    set -l expected_line "export DIR_specialchars=\"$expected_encoded\""
-    _assert_eq "$expected_line" "$stored_line" 'bookmark file stores escaped shell-safe path'
+    string match -q 'export DIR_specialchars="*"' -- "$stored_line"
+    _assert_true $status 'bookmark line uses export DIR_<name>="..." format'
+
+    string match -q '*\$HOME/work/special*' -- "$stored_line"
+    _assert_true $status 'bookmark line preserves $HOME prefix'
+
+    string match -q '*\\"q\\"*' -- "$stored_line"
+    _assert_true $status 'bookmark line escapes double quotes'
+
+    string match -q '*\\$d*' -- "$stored_line"
+    _assert_true $status 'bookmark line escapes dollar signs'
+
+    string match -q '*\\\\b*' -- "$stored_line"
+    _assert_true $status 'bookmark line escapes backslashes'
 end
 
 function _test_conf_aliases

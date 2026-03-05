@@ -23,10 +23,11 @@ end
 set -l conf_d_dir "$HOME/.config/fish/conf.d"
 set -l conf_file "$conf_d_dir/fishmarks.fish"
 set -l escaped_source (string replace -- "$HOME" '$HOME' "$source_file")
+set -l source_token (string escape --style=script -- "$escaped_source")
 
 command mkdir -p -- "$conf_d_dir"
 
 printf '# Load fishmarks (https://github.com/techwizrd/fishmarks)\n' >"$conf_file"
-printf 'source %s\n' "$escaped_source" >>"$conf_file"
+printf 'source %s\n' "$source_token" >>"$conf_file"
 
 echo "Fishmarks has been installed to $conf_file"
