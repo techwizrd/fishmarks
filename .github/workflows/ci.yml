@@ -6,44 +6,56 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        fish_image:
-          - ghcr.io/fish-shell/fish-shell:3.7.1
-          - ghcr.io/fish-shell/fish-shell:4.0.6
+        os:
+          - ubuntu-latest
+          - macos-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Show fish version
-        run: docker run --rm ${{ matrix.fish_image }} fish --version
+        uses: fish-actions/install-fish@v1
+
+      - name: Print fish version
+        run: fish --version
 
       - name: Validate fish scripts
-        run: |
-          docker run --rm \
-            -v "$PWD:/workspace" \
-            -w /workspace \
-            ${{ matrix.fish_image }} \
-            fish tests/check.fish
+        run: fish tests/check.fish
 
       - name: Run test suite
-        run: |
-          docker run --rm \
-            -v "$PWD:/workspace" \
-            -w /workspace \
-            ${{ matrix.fish_image }} \
-            fish tests/run.fish
+        run: fish tests/run.fish
 
       - name: Smoke test installer
+        if: matrix.os == 'ubuntu-latest'
         run: |
           TEST_HOME=$(mktemp -d)
-          docker run --rm \
-            -v "$PWD:/workspace" \
-            -v "$TEST_HOME:/test-home" \
-            -w /workspace \
-            ${{ matrix.fish_image }} \
-            env HOME=/test-home fish install.fish
+          HOME="$TEST_HOME" fish install.fish
           test -f "$TEST_HOME/.config/fish/conf.d/fishmarks.fish"
+
+  fisher-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install fish
+        uses: fish-actions/install-fish@v1
+
+      - name: Install plugin with fisher
+        uses: fish-actions/fisher@v1
+        with:
+          plugins: $GITHUB_WORKSPACE
+
+      - name: Verify plugin commands load
+        run: |
+          type -q save_bookmark
+          type -q go_to_bookmark
+          type -q fishmarks_version
+        shell: fish {0}
