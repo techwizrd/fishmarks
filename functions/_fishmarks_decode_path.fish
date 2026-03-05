@@ -11,5 +11,9 @@ function _fishmarks_decode_path --argument-names raw_value
     end
 
     set value (string replace -a -- '\$HOME' "$HOME" "$value")
-    string replace -a -- '$HOME' "$HOME" "$value"
+    set value (string replace -a -- '$HOME' "$HOME" "$value")
+    set value (string replace -a -- '\`' '`' "$value")
+    set value (string replace -a -- '\$' '$' "$value")
+    set value (string replace -a -- '\"' '"' "$value")
+    string replace -a -- "\\\\" "\\" "$value"
 end

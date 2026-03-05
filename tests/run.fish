@@ -89,6 +89,29 @@ function _test_invalid_name_rejected
     _assert_status 1 $status 'invalid bookmark names are rejected'
 end
 
+function _test_shell_escaped_paths
+    set -l special_path "$HOME/work/special \"q\" \$d\\b"
+    _prepare_dir "$special_path"
+    save_bookmark specialchars
+    _assert_status 0 $status 'save_bookmark supports special shell characters'
+
+    set -l location (print_bookmark specialchars)
+    _assert_status 0 $status 'print_bookmark resolves special shell characters'
+    _assert_eq "$special_path" "$location" 'special shell characters round-trip correctly'
+
+    set -l stored_line
+    while read -l line
+        if string match -rq '^export DIR_specialchars=' -- "$line"
+            set stored_line "$line"
+            break
+        end
+    end <"$SDIRS"
+
+    set -l expected_encoded (_fishmarks_encode_path "$special_path")
+    set -l expected_line "export DIR_specialchars=\"$expected_encoded\""
+    _assert_eq "$expected_line" "$stored_line" 'bookmark file stores escaped shell-safe path'
+end
+
 function _test_conf_aliases
     set -e NO_FISHMARKS_COMPAT_ALIASES
     set -e __fishmarks_conf_loaded
@@ -111,6 +134,7 @@ _test_default_name_generation
 _test_go_to_and_delete
 _test_legacy_file_compatibility
 _test_invalid_name_rejected
+_test_shell_escaped_paths
 _test_conf_aliases
 
 if test $failures -gt 0
