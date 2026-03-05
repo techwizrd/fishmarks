@@ -14,6 +14,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - GitHub Actions CI workflow and pre-commit/prek hook configuration.
 - Contributor policy docs and GitHub issue/PR templates.
 - `fishmarks_version` command to report plugin version.
+- Fundle compatibility via root `init.fish` and a CI smoke test.
 
 ### Changed
 

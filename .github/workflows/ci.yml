@@ -59,3 +59,31 @@ jobs:
           type -q go_to_bookmark
           type -q fishmarks_version
         shell: fish {0}
+
+  fundle-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Install fish
+        uses: fish-actions/install-fish@v1
+
+      - name: Install plugin with fundle
+        run: |
+          set -gx HOME (mktemp -d)
+          command mkdir -p -- "$HOME/.config/fish/functions"
+          curl -fsSL https://raw.githubusercontent.com/danhper/fundle/f4b39217e135fd209bd4e055eca8d32decdd91e0/functions/fundle.fish -o "$HOME/.config/fish/functions/fundle.fish"
+
+          printf "fundle plugin 'techwizrd/fishmarks' --url '%s'\n" "$GITHUB_WORKSPACE" > "$HOME/.config/fish/config.fish"
+          printf 'fundle init\n' >> "$HOME/.config/fish/config.fish"
+
+          source "$HOME/.config/fish/config.fish"
+          fundle install
+          source "$HOME/.config/fish/config.fish"
+
+          type -q save_bookmark
+          type -q go_to_bookmark
+          type -q fishmarks_version
+        shell: fish {0}

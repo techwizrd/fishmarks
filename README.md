@@ -28,6 +28,21 @@ If you use [Fisher](https://github.com/jorgebucaran/fisher), install fishmarks w
 fisher install techwizrd/fishmarks
 ```
 
+### Fundle Installation
+
+If you use [Fundle](https://github.com/danhper/fundle), add fishmarks to your fish config:
+
+```fish
+fundle plugin 'techwizrd/fishmarks'
+fundle init
+```
+
+Then install plugins:
+
+```fish
+fundle install
+```
+
 Fish plugin managers load fishmarks from `functions/`, `conf.d/`, and `completions/`.
 The top-level `marks.fish` file remains as a compatibility loader for existing manual installs.
 
@@ -141,7 +156,7 @@ Run all hooks on demand:
 prek run --all-files
 ```
 
-GitHub Actions CI runs the same checks (`tests/check.fish`, `tests/run.fish`) and an installer smoke test on every push and pull request.
+GitHub Actions CI runs checks (`tests/check.fish`, `tests/run.fish`), installer smoke tests, and plugin-manager smoke tests for Fisher and Fundle on every push and pull request.
 
 ## Versioning
 
