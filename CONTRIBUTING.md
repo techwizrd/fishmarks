@@ -39,3 +39,8 @@ prek run --all-files
 
 - The project targets Fish 3+.
 - Backward compatibility with existing bookmark storage (`~/.sdirs`) should be preserved unless a migration path is documented.
+
+## Versioning and changelog
+
+- Releases follow Semantic Versioning.
+- User-visible changes should be added to `CHANGELOG.md` under `Unreleased`.

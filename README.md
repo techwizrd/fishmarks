@@ -122,6 +122,10 @@ prek run --all-files
 
 GitHub Actions CI runs the same checks (`tests/check.fish`, `tests/run.fish`) and an installer smoke test on every push and pull request.
 
+## Versioning
+
+fishmarks follows [Semantic Versioning](https://semver.org/). Notable changes are tracked in `CHANGELOG.md`.
+
 ### Contributing
 
 *Have you noticed any bugs or issues with fishmarks? Do you have any features you would like to see added?*
