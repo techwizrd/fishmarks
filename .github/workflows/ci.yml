@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    name: test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show fish version
+        uses: fish-actions/install-fish@v1
+
+      - name: Print fish version
+        run: fish --version
+
+      - name: Validate fish scripts
+        run: fish tests/check.fish
+
+      - name: Run test suite
+        run: fish tests/run.fish
+
+      - name: Smoke test installer
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          TEST_HOME=$(mktemp -d)
+          HOME="$TEST_HOME" fish install.fish
+          test -f "$TEST_HOME/.config/fish/conf.d/fishmarks.fish"
+
+  fisher-smoke:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install fish
+        uses: fish-actions/install-fish@v1
+
+      - name: Install plugin with fisher
+        uses: fish-actions/fisher@v1
+        with:
+          plugins: $GITHUB_WORKSPACE
+
+      - name: Verify plugin commands load
+        run: |
+          type -q save_bookmark
+          type -q go_to_bookmark
+          type -q fishmarks_version
+        shell: fish {0}
