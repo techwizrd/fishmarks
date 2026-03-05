@@ -7,24 +7,43 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        fish_image:
+          - ghcr.io/fish-shell/fish-shell:3.7.1
+          - ghcr.io/fish-shell/fish-shell:4.0.6
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install fish
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y fish
+      - name: Show fish version
+        run: docker run --rm ${{ matrix.fish_image }} fish --version
 
       - name: Validate fish scripts
-        run: fish tests/check.fish
+        run: |
+          docker run --rm \
+            -v "$PWD:/workspace" \
+            -w /workspace \
+            ${{ matrix.fish_image }} \
+            fish tests/check.fish
 
       - name: Run test suite
-        run: fish tests/run.fish
+        run: |
+          docker run --rm \
+            -v "$PWD:/workspace" \
+            -w /workspace \
+            ${{ matrix.fish_image }} \
+            fish tests/run.fish
 
       - name: Smoke test installer
         run: |
           TEST_HOME=$(mktemp -d)
-          HOME="$TEST_HOME" fish install.fish
+          docker run --rm \
+            -v "$PWD:/workspace" \
+            -v "$TEST_HOME:/test-home" \
+            -w /workspace \
+            ${{ matrix.fish_image }} \
+            env HOME=/test-home fish install.fish
           test -f "$TEST_HOME/.config/fish/conf.d/fishmarks.fish"
