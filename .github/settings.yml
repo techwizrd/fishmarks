@@ -1,0 +1,18 @@
+repository:
+  default_branch: master
+  delete_branch_on_merge: true
+
+branches:
+  - name: master
+    protection:
+      enforce_admins: true
+      required_pull_request_reviews:
+        required_approving_review_count: 1
+        dismiss_stale_reviews: true
+        require_code_owner_reviews: false
+      required_status_checks:
+        strict: true
+        contexts:
+          - test (ghcr.io/fish-shell/fish-shell:3.7.1)
+          - test (ghcr.io/fish-shell/fish-shell:4.0.6)
+      restrictions: null

@@ -44,3 +44,8 @@ prek run --all-files
 
 - Releases follow Semantic Versioning.
 - User-visible changes should be added to `CHANGELOG.md` under `Unreleased`.
+
+## Repository automation
+
+- `.github/settings.yml` defines branch protection defaults for repositories using the GitHub Settings app.
+- If Settings app is not installed, apply equivalent branch protection rules manually in repository settings.
