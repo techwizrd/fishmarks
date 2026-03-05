@@ -22,6 +22,12 @@ fish tests/check.fish
 fish tests/run.fish
 ```
 
+Shortcut:
+
+```sh
+make test
+```
+
 Or run all hooks:
 
 ```fish

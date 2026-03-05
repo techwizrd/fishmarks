@@ -28,6 +28,9 @@ If you use [Fisher](https://github.com/jorgebucaran/fisher), install fishmarks w
 fisher install techwizrd/fishmarks
 ```
 
+Fish plugin managers load fishmarks from `functions/`, `conf.d/`, and `completions/`.
+The top-level `marks.fish` file remains as a compatibility loader for existing manual installs.
+
 ### Manual Installation
 
 To install fishmarks manually:
@@ -75,6 +78,7 @@ g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"
 p <bookmark_name> - Prints the directory associated with "bookmark_name"
 d <bookmark_name> - Deletes the bookmark
 l - Lists all available bookmarks
+fishmarks_version - Prints the installed fishmarks version
 ```
 
 ### Configuration Variables
@@ -109,6 +113,18 @@ Run syntax and formatting checks with:
 
 ```fish
 fish tests/check.fish
+```
+
+Or with make:
+
+```sh
+make check
+```
+
+Run all checks and tests with:
+
+```sh
+make test
 ```
 
 ## Development workflow

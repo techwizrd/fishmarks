@@ -32,8 +32,10 @@ for function_file in \
     _fishmarks_entries \
     _fishmarks_find_path \
     _fishmarks_valid_name \
+    _fishmarks_path_supported \
     _fishmarks_write_entries \
     _fishmarks_complete \
+    fishmarks_version \
     _check_help \
     _valid_bookmark \
     save_bookmark \

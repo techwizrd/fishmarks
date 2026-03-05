@@ -127,6 +127,23 @@ function _test_shell_escaped_paths
     _assert_true $status 'bookmark line escapes backslashes'
 end
 
+function _test_rejects_newline_paths
+    set -l unsupported_path "$HOME/work/bad\nname"
+    _prepare_dir "$unsupported_path"
+    save_bookmark newlinepath >/dev/null 2>/dev/null
+    _assert_status 1 $status 'save_bookmark rejects directories containing newlines'
+
+    print_bookmark newlinepath >/dev/null 2>/dev/null
+    _assert_status 1 $status 'rejected newline path bookmark is not written'
+end
+
+function _test_version_command
+    set -l version_output (fishmarks_version)
+    _assert_status 0 $status 'fishmarks_version command succeeds'
+    string match -rq '^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$' -- "$version_output"
+    _assert_true $status 'fishmarks_version returns semver-like output'
+end
+
 function _test_conf_aliases
     set -e NO_FISHMARKS_COMPAT_ALIASES
     set -e __fishmarks_conf_loaded
@@ -150,6 +167,8 @@ _test_go_to_and_delete
 _test_legacy_file_compatibility
 _test_invalid_name_rejected
 _test_shell_escaped_paths
+_test_rejects_newline_paths
+_test_version_command
 _test_conf_aliases
 
 if test $failures -gt 0

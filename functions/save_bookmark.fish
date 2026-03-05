@@ -9,6 +9,11 @@ function save_bookmark --description "Save the current directory as a bookmark"
         return 1
     end
 
+    if not _fishmarks_path_supported "$PWD"
+        _fishmarks_print_error 'Current directory path contains unsupported newline or carriage-return characters.'
+        return 1
+    end
+
     set -l updated_entries
     for entry in (_fishmarks_entries)
         set -l parts (string split -m 1 '=' -- "$entry")
