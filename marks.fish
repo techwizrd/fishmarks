@@ -38,10 +38,13 @@ for function_file in \
     fishmarks_version \
     _check_help \
     save_bookmark \
+    rename_bookmark \
+    bookmark_exists \
     go_to_bookmark \
     print_bookmark \
     delete_bookmark \
-    list_bookmarks
+    list_bookmarks \
+    fishmarks_doctor
     source "$fishmarks_root/functions/$function_file.fish"
 end
 

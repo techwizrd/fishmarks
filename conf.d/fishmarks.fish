@@ -8,10 +8,14 @@ _fishmarks_ensure_sdirs
 complete -e -c print_bookmark
 complete -e -c delete_bookmark
 complete -e -c go_to_bookmark
+complete -e -c rename_bookmark
+complete -e -c bookmark_exists
 
 complete -c print_bookmark -a '(_fishmarks_complete)' -f
 complete -c delete_bookmark -a '(_fishmarks_complete)' -f
 complete -c go_to_bookmark -a '(_fishmarks_complete)' -f
+complete -c rename_bookmark -a '(_fishmarks_complete)' -f
+complete -c bookmark_exists -a '(_fishmarks_complete)' -f
 
 if not set -q NO_FISHMARKS_COMPAT_ALIASES
     alias s save_bookmark

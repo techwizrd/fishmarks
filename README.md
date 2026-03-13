@@ -88,11 +88,14 @@ git pull --ff-only
 ### Commands
 
 ```
-s <bookmark_name> - Saves the current directory as "bookmark_name"
-g <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"
-p <bookmark_name> - Prints the directory associated with "bookmark_name"
-d <bookmark_name> - Deletes the bookmark
-l - Lists all available bookmarks
+save_bookmark [--force] [bookmark_name] (or s) - Saves the current directory as "bookmark_name"
+rename_bookmark <old_name> <new_name> - Renames an existing bookmark
+bookmark_exists <bookmark_name> - Returns success if bookmark exists
+go_to_bookmark <bookmark_name> (or g) - Goes (cd) to the directory associated with "bookmark_name"
+print_bookmark <bookmark_name> (or p) - Prints the directory associated with "bookmark_name"
+delete_bookmark <bookmark_name> (or d) - Deletes the bookmark
+list_bookmarks [--names-only] (or l) - Lists all available bookmarks
+fishmarks_doctor - Checks bookmarks file for common issues
 fishmarks_version - Prints the installed fishmarks version
 ```
 
