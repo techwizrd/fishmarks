@@ -10,6 +10,16 @@ function print_bookmark --description "Print the directory associated with a boo
         return 0
     end
 
+    if test (count $argv) -ne 1
+        _fishmarks_print_error "exactly one bookmark name is required"
+        return 1
+    end
+
+    if string match -q -- '--*' "$bookmark_name"
+        _fishmarks_print_error "unknown option '$bookmark_name'"
+        return 1
+    end
+
     set -l target (_fishmarks_find_path "$bookmark_name")
     if test -z "$target"
         _fishmarks_print_error "'$bookmark_name' bookmark does not exist"

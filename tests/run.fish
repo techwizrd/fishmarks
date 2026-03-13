@@ -55,6 +55,27 @@ function _test_default_name_generation
     _assert_eq "$HOME/work/my-app.v2" "$location" 'default bookmark name is sanitized basename'
 end
 
+function _test_save_requires_force_to_overwrite
+    _prepare_dir "$HOME/work/overwrite-one"
+    save_bookmark overwrite_target
+    _assert_status 0 $status 'first save for overwrite_target succeeds'
+
+    _prepare_dir "$HOME/work/overwrite-two"
+    save_bookmark overwrite_target >/dev/null 2>/dev/null
+    _assert_status 1 $status 'save_bookmark rejects overwrite without --force'
+
+    set -l location (print_bookmark overwrite_target)
+    _assert_status 0 $status 'existing bookmark remains after rejected overwrite'
+    _assert_eq "$HOME/work/overwrite-one" "$location" 'rejected overwrite keeps original path'
+
+    save_bookmark --force overwrite_target
+    _assert_status 0 $status 'save_bookmark --force overwrites existing bookmark'
+
+    set -l updated_location (print_bookmark overwrite_target)
+    _assert_status 0 $status 'forced overwrite is readable'
+    _assert_eq "$HOME/work/overwrite-two" "$updated_location" 'forced overwrite updates bookmark path'
+end
+
 function _test_go_to_and_delete
     _prepare_dir "$HOME/projects/alpha"
     save_bookmark alpha
@@ -70,6 +91,36 @@ function _test_go_to_and_delete
 
     print_bookmark alpha >/dev/null 2>/dev/null
     _assert_status 1 $status 'deleted bookmark no longer resolves'
+end
+
+function _test_rename_bookmark
+    _prepare_dir "$HOME/projects/rename-path"
+    save_bookmark rename_old
+    _assert_status 0 $status 'save bookmark for rename succeeds'
+
+    rename_bookmark rename_old rename_new
+    _assert_status 0 $status 'rename_bookmark succeeds'
+
+    print_bookmark rename_old >/dev/null 2>/dev/null
+    _assert_status 1 $status 'old bookmark name is removed after rename'
+
+    set -l new_location (print_bookmark rename_new)
+    _assert_status 0 $status 'new bookmark name resolves after rename'
+    _assert_eq "$HOME/projects/rename-path" "$new_location" 'rename_bookmark preserves original path'
+end
+
+function _test_bookmark_exists
+    _prepare_dir "$HOME/projects/exists-path"
+    save_bookmark exists_target
+    _assert_status 0 $status 'save bookmark for exists test succeeds'
+
+    set -l existing_output (bookmark_exists exists_target)
+    _assert_status 0 $status 'bookmark_exists returns success for existing bookmark'
+    _assert_eq '' "$existing_output" 'bookmark_exists does not print output for existing bookmark'
+
+    set -l missing_output (bookmark_exists missing_target)
+    _assert_status 1 $status 'bookmark_exists returns failure for missing bookmark'
+    _assert_eq '' "$missing_output" 'bookmark_exists does not print output for missing bookmark'
 end
 
 function _test_legacy_file_compatibility
@@ -91,6 +142,91 @@ function _test_invalid_name_rejected
     _prepare_dir "$HOME/work/invalid"
     save_bookmark bad-name >/dev/null 2>/dev/null
     _assert_status 1 $status 'invalid bookmark names are rejected'
+end
+
+function _test_list_names_only
+    _prepare_dir "$HOME/work/names-one"
+    save_bookmark names_only_a
+    _assert_status 0 $status 'save first names-only bookmark succeeds'
+
+    _prepare_dir "$HOME/work/names-two"
+    save_bookmark names_only_b
+    _assert_status 0 $status 'save second names-only bookmark succeeds'
+
+    set -l names_output (list_bookmarks --names-only)
+    _assert_status 0 $status 'list_bookmarks --names-only succeeds'
+
+    contains -- names_only_a $names_output
+    _assert_true $status 'names-only output includes first bookmark name'
+
+    contains -- names_only_b $names_output
+    _assert_true $status 'names-only output includes second bookmark name'
+
+    string match -q '*/*' -- "$names_output"
+    _assert_status 1 $status 'names-only output does not include paths'
+end
+
+function _test_argument_validation
+    print_bookmark one two >/dev/null 2>/dev/null
+    _assert_status 1 $status 'print_bookmark rejects extra arguments'
+
+    print_bookmark --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'print_bookmark rejects unknown options'
+
+    go_to_bookmark one two >/dev/null 2>/dev/null
+    _assert_status 1 $status 'go_to_bookmark rejects extra arguments'
+
+    go_to_bookmark --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'go_to_bookmark rejects unknown options'
+
+    delete_bookmark one two >/dev/null 2>/dev/null
+    _assert_status 1 $status 'delete_bookmark rejects extra arguments'
+
+    delete_bookmark --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'delete_bookmark rejects unknown options'
+
+    bookmark_exists one two >/dev/null 2>/dev/null
+    _assert_status 1 $status 'bookmark_exists rejects extra arguments'
+
+    bookmark_exists --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'bookmark_exists rejects unknown options'
+
+    rename_bookmark old --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'rename_bookmark rejects unknown options'
+
+    rename_bookmark bad-name new_name >/dev/null 2>/dev/null
+    _assert_status 1 $status 'rename_bookmark validates old bookmark names'
+
+    save_bookmark first second >/dev/null 2>/dev/null
+    _assert_status 1 $status 'save_bookmark rejects extra positional arguments'
+
+    save_bookmark --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'save_bookmark rejects unknown options'
+
+    list_bookmarks extra >/dev/null 2>/dev/null
+    _assert_status 1 $status 'list_bookmarks rejects unexpected arguments'
+
+    fishmarks_doctor --unknown >/dev/null 2>/dev/null
+    _assert_status 1 $status 'fishmarks_doctor rejects unknown options'
+end
+
+function _test_help_output
+    set -l commands \
+        save_bookmark \
+        rename_bookmark \
+        bookmark_exists \
+        go_to_bookmark \
+        print_bookmark \
+        delete_bookmark \
+        list_bookmarks \
+        fishmarks_doctor
+
+    for command_name in $commands
+        set -l help_output ($command_name --help)
+        _assert_status 0 $status "$command_name --help succeeds"
+        string match -q '*save_bookmark*' -- "$help_output"
+        _assert_true $status "$command_name --help includes command list"
+    end
 end
 
 function _test_shell_escaped_paths
@@ -161,15 +297,43 @@ function _test_conf_aliases
     _assert_status 0 $status 'alias l is configured by conf.d script'
 end
 
+function _test_fishmarks_doctor
+    set -l original_sdirs "$SDIRS"
+
+    set -gx SDIRS "$HOME/.sdirs_doctor_ok"
+    command mkdir -p -- "$HOME/doctor/ok"
+    printf '\n' >"$SDIRS"
+    printf '# fishmarks comments are ignored\n' >>"$SDIRS"
+    printf 'export DIR_ok="\\$HOME/doctor/ok"\n' >>"$SDIRS"
+    fishmarks_doctor >/dev/null
+    _assert_status 0 $status 'fishmarks_doctor succeeds for clean bookmark file'
+
+    set -gx SDIRS "$HOME/.sdirs_doctor_bad"
+    printf 'not a bookmark\n' >"$SDIRS"
+    printf 'export DIR_dup="\\$HOME/doctor/missing"\n' >>"$SDIRS"
+    printf 'export DIR_dup="\\$HOME/doctor/missing-two"\n' >>"$SDIRS"
+    fishmarks_doctor >/dev/null 2>/dev/null
+    _assert_status 1 $status 'fishmarks_doctor reports malformed, duplicate, or missing directories'
+
+    set -gx SDIRS "$original_sdirs"
+end
+
 _test_save_and_print
 _test_default_name_generation
+_test_save_requires_force_to_overwrite
 _test_go_to_and_delete
+_test_rename_bookmark
+_test_bookmark_exists
 _test_legacy_file_compatibility
 _test_invalid_name_rejected
+_test_list_names_only
+_test_argument_validation
 _test_shell_escaped_paths
 _test_rejects_newline_paths
 _test_version_command
 _test_conf_aliases
+_test_fishmarks_doctor
+_test_help_output
 
 if test $failures -gt 0
     printf '\n%d of %d assertions failed\n' "$failures" "$assertions"

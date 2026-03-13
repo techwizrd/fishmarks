@@ -4,6 +4,20 @@ function delete_bookmark --description "Delete a bookmark"
         return 1
     end
 
+    if _check_help "$argv[1]"
+        return 0
+    end
+
+    if test (count $argv) -ne 1
+        _fishmarks_print_error "exactly one bookmark name is required"
+        return 1
+    end
+
+    if string match -q -- '--*' "$argv[1]"
+        _fishmarks_print_error "unknown option '$argv[1]'"
+        return 1
+    end
+
     set -l removed 0
     set -l updated_entries
     for entry in (_fishmarks_entries)
