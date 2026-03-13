@@ -1,12 +1,24 @@
 # fishmarks
 [![CI](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml?query=branch%3Amaster)
-[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
-[![SemVer](https://img.shields.io/badge/versioning-semver-3f4551)](https://semver.org/)
+[![GitHub Release](https://img.shields.io/github/v/release/techwizrd/fishmarks?sort=semver)](https://github.com/techwizrd/fishmarks/releases)
 [![Fish 3+](https://img.shields.io/badge/fish-3%2B-4AAE46)](https://fishshell.com/)
+[![SemVer](https://img.shields.io/badge/versioning-semver-3f4551)](https://semver.org/)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
 [Fish shell](https://fishshell.com/). Fishmarks is compatible with your existing
 bashmarks and bookmarks added using fishmarks are also available in bashmarks.
+
+## Demo
+
+![fishmarks demo](.github/assets/fishmarks-demo.gif)
+
+This demo is recorded with [asciinema](https://asciinema.org/) and rendered with [agg](https://github.com/asciinema/agg).
+
+For demo recording commands, see `CONTRIBUTING.md`.
+
+Tip: keep the demo under 30 seconds and focus on a single workflow (`s`, `l`, `g`, `p`, `d`).
 
 ## Installation
 

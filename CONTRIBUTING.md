@@ -34,6 +34,20 @@ Or run all hooks:
 prek run --all-files
 ```
 
+## Record the README demo
+
+Use asciinema to capture a cast and agg to render the GIF used by the README:
+
+```fish
+mkdir -p .github/assets
+
+# Record a fresh cast
+asciinema rec --idle-time-limit 1 --overwrite .github/assets/fishmarks-demo.cast
+
+# Render to GIF
+agg --font-family "Fira Code" --theme dracula .github/assets/fishmarks-demo.cast .github/assets/fishmarks-demo.gif
+```
+
 ## Pull requests
 
 - Keep PRs focused and small when possible.
