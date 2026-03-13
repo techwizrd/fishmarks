@@ -20,10 +20,13 @@ Examples of unacceptable behavior:
 
 ## Scope
 
-This Code of Conduct applies in project spaces, including issues, pull requests, and discussions.
+This Code of Conduct applies in project spaces, including issues,
+pull requests, and discussions.
 
 ## Enforcement
 
-Project maintainers are responsible for clarifying and enforcing this Code of Conduct and may remove, edit, or reject comments, commits, code, issues, and other contributions that are not aligned with it.
+Project maintainers are responsible for clarifying and enforcing this
+Code of Conduct and may remove, edit, or reject comments, commits,
+code, issues, and other contributions that are not aligned with it.
 
 To report concerns, open a private security advisory or contact the maintainers through repository administrators.

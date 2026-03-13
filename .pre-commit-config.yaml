@@ -6,6 +6,18 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
       - id: check-added-large-files
+      - id: check-yaml
+
+  - repo: https://github.com/rhysd/actionlint
+    rev: v1.7.8
+    hooks:
+      - id: actionlint
+
+  - repo: https://github.com/DavidAnson/markdownlint-cli2
+    rev: v0.18.1
+    hooks:
+      - id: markdownlint-cli2
+        files: \.md$
 
   - repo: local
     hooks:
@@ -19,3 +31,4 @@ repos:
         entry: fish tests/run.fish
         language: system
         pass_filenames: false
+        stages: [pre-push]

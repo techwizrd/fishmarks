@@ -1,4 +1,5 @@
-Main Developer
---------------
+# Authors
+
+## Main Developer
 
 Kunal Sarkhel <kksarkhel@bluedevs.net>

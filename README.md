@@ -1,4 +1,5 @@
 # fishmarks
+
 [![CI](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/techwizrd/fishmarks/actions/workflows/ci.yml?query=branch%3Amaster)
 [![GitHub Release](https://img.shields.io/github/v/release/techwizrd/fishmarks?sort=semver)](https://github.com/techwizrd/fishmarks/releases)
 [![Fish 3+](https://img.shields.io/badge/fish-3%2B-4AAE46)](https://fishshell.com/)
@@ -7,18 +8,15 @@
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
-[Fish shell](https://fishshell.com/). Fishmarks is compatible with your existing
-bashmarks and bookmarks added using fishmarks are also available in bashmarks.
+[Fish shell](https://fishshell.com/). Fishmarks is compatible with existing bashmarks,
+and bookmarks added using fishmarks are also available in bashmarks.
 
 ## Demo
 
 ![fishmarks demo](.github/assets/fishmarks-demo.gif)
 
-This demo is recorded with [asciinema](https://asciinema.org/) and rendered with [agg](https://github.com/asciinema/agg).
-
-For demo recording commands, see `CONTRIBUTING.md`.
-
-Tip: keep the demo under 30 seconds and focus on a single workflow (`s`, `l`, `g`, `p`, `d`).
+This demo is recorded with [asciinema](https://asciinema.org/) and rendered with
+[agg](https://github.com/asciinema/agg).
 
 ## Installation
 
@@ -30,7 +28,14 @@ To install fishmarks automatically, paste the following in your terminal.
 curl -fsSL https://raw.githubusercontent.com/techwizrd/fishmarks/master/install.fish | fish
 ```
 
-Please note, however, that you should _never_ install things by piping untrusted "install" scripts downloaded through ``curl`` directly into your shell (be it ``bash`` or ``fish``). Even if you read through the install script and think you understand it, you could be prone to a [man-in-the-middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack or any number of security vulnerabilities. While manual installations are tedious, they are recommended for any situations where security is a concern (and it should almost always be a concern).
+Please note that you should _never_ install things by piping untrusted install scripts
+downloaded through `curl` directly into your shell (whether `bash` or `fish`).
+Even if you read through the install script and think you understand it, you could still
+be prone to a
+[man-in-the-middle](https://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack
+or other security vulnerabilities.
+While manual installations are tedious, they are recommended for situations where
+security is a concern (and it should almost always be a concern).
 
 ### Fisher Installation
 
@@ -56,50 +61,54 @@ fundle install
 ```
 
 Fish plugin managers load fishmarks from `functions/`, `conf.d/`, and `completions/`.
-The top-level `marks.fish` file remains as a compatibility loader for existing manual installs.
+The top-level `marks.fish` file remains as a compatibility loader
+for existing manual installs.
 
 ### Manual Installation
 
 To install fishmarks manually:
 
-1.  Clone fishmarks into `~/.fishmarks`
+1. Clone fishmarks into `~/.fishmarks`.
 
 ```fish
-$ git clone https://github.com/techwizrd/fishmarks.git ~/.fishmarks
+git clone https://github.com/techwizrd/fishmarks.git ~/.fishmarks
 ```
 
-2.  Source `~/.fishmarks/marks.fish` from a file in `~/.config/fish/conf.d/`
+1. Source `~/.fishmarks/marks.fish` from a file in `~/.config/fish/conf.d/`.
 
 ```fish
 mkdir -p ~/.config/fish/conf.d
-printf '# Load fishmarks (https://github.com/techwizrd/fishmarks)\nsource ~/.fishmarks/marks.fish\n' > ~/.config/fish/conf.d/fishmarks.fish
+printf '# Load fishmarks (https://github.com/techwizrd/fishmarks)\n' \
+  'source ~/.fishmarks/marks.fish\n' > ~/.config/fish/conf.d/fishmarks.fish
 ```
+
 ### Update to the latest version
 
 To update to the latest version of fishmarks:
 
-1.  Navigate to the directory where your fishmarks code is kept (It is located in `~/.fishmarks` by default)
+1. Navigate to the directory where fishmarks is installed (`~/.fishmarks` by default).
+
 ```fish
 cd ~/.fishmarks
 ```
 
-2.  Use git to fetch the latest version:
+1. Use git to fetch the latest version.
 
 ```fish
 git fetch --all
 ```
-3.  Pull the latest version:
+
+1. Pull the latest version.
 
 ```fish
 git pull --ff-only
 ```
 
-
 ## Usage
 
 ### Commands
 
-```
+```text
 save_bookmark [--force] [bookmark_name] (or s) - Saves the current directory as "bookmark_name"
 rename_bookmark <old_name> <new_name> - Renames an existing bookmark
 bookmark_exists <bookmark_name> - Returns success if bookmark exists
@@ -112,14 +121,15 @@ fishmarks_version - Prints the installed fishmarks version
 ```
 
 ### Configuration Variables
-All of these must be set before `marks.fish` is sourced in your fish startup files.
 
-* `SDIRS` - (default: `~/.sdirs`) where all your bookmarks are kept.
-* `NO_FISHMARKS_COMPAT_ALIASES` - set this to turn off the bashmark-compatible aliases (e.g., `p` for `print_bookmark`)
+All variables must be set before `marks.fish` is sourced in fish startup files.
+
+- `SDIRS` - default: `~/.sdirs`; location where bookmarks are stored.
+- `NO_FISHMARKS_COMPAT_ALIASES` - disable bashmark-compatible aliases such as `p`.
 
 ### Example
 
-```
+```text
 [~]$ cd /var/www/
 [/var/www]$ s webfolder
 [/usr/local/lib]$ cd /usr/local/lib/
@@ -171,25 +181,27 @@ Run all hooks on demand:
 prek run --all-files
 ```
 
-GitHub Actions CI runs checks (`tests/check.fish`, `tests/run.fish`), installer smoke tests, and plugin-manager smoke tests for Fisher and Fundle on every push and pull request.
+GitHub Actions CI runs checks (`tests/check.fish`, `tests/run.fish`), installer smoke tests,
+and plugin-manager smoke tests for Fisher and Fundle on every push and pull request.
 
 ## Versioning
 
-fishmarks follows [Semantic Versioning](https://semver.org/). Notable changes are tracked in `CHANGELOG.md`.
+fishmarks follows [Semantic Versioning](https://semver.org/).
+Notable changes are tracked in `CHANGELOG.md`.
 
 ### Contributing
 
 See `CONTRIBUTING.md` for setup, validation commands, and pull request guidelines.
 
-
 ## License
+
 Copyright 2013-present Kunal Sarkhel
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use
-this file except in compliance with the License.  You may obtain a copy of the
+this file except in compliance with the License. You may obtain a copy of the
 License at `https://www.apache.org/licenses/LICENSE-2.0`.
 
 Unless required by applicable law or agreed to in writing, software distributed
 under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-CONDITIONS OF ANY KIND, either express or implied.  See the License for the
+CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.

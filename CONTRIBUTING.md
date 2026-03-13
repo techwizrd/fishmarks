@@ -45,7 +45,8 @@ mkdir -p .github/assets
 asciinema rec --idle-time-limit 1 --overwrite .github/assets/fishmarks-demo.cast
 
 # Render to GIF
-agg --font-family "Fira Code" --theme dracula .github/assets/fishmarks-demo.cast .github/assets/fishmarks-demo.gif
+agg --font-family "Fira Code" --theme dracula \
+  .github/assets/fishmarks-demo.cast .github/assets/fishmarks-demo.gif
 ```
 
 ## Pull requests
@@ -58,7 +59,8 @@ agg --font-family "Fira Code" --theme dracula .github/assets/fishmarks-demo.cast
 ## Compatibility policy
 
 - The project targets Fish 3+.
-- Backward compatibility with existing bookmark storage (`~/.sdirs`) should be preserved unless a migration path is documented.
+- Backward compatibility with existing bookmark storage (`~/.sdirs`) should be
+  preserved unless a migration path is documented.
 
 ## Versioning and changelog
 
