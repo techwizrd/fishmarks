@@ -1,6 +1,10 @@
 function _fishmarks_complete
-    for entry in (_fishmarks_entries)
-        set -l parts (string split -m 1 '=' -- "$entry")
-        printf '%s\n' "$parts[1]"
-    end
+    _fishmarks_ensure_sdirs
+
+    while read -l line
+        set -l entry (string match -r '^export[[:space:]]+DIR_([A-Za-z0-9_]+)=' -- "$line")
+        if test (count $entry) -gt 1
+            printf '%s\n' "$entry[2]"
+        end
+    end <"$SDIRS"
 end

@@ -4,13 +4,17 @@ function print_bookmark --description "Print the directory associated with a boo
         return 1
     end
 
-    if not _check_help "$argv[1]"
-        set -l target (_fishmarks_find_path "$argv[1]")
-        if test -z "$target"
-            _fishmarks_print_error "'$argv[1]' bookmark does not exist"
-            return 1
-        end
+    set -l bookmark_name "$argv[1]"
 
-        printf '%s\n' "$target"
+    if _check_help "$bookmark_name"
+        return 0
     end
+
+    set -l target (_fishmarks_find_path "$bookmark_name")
+    if test -z "$target"
+        _fishmarks_print_error "'$bookmark_name' bookmark does not exist"
+        return 1
+    end
+
+    printf '%s\n' "$target"
 end
