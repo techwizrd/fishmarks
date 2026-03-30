@@ -7,9 +7,22 @@
 [![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
 [![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-Fishmarks is a clone of [bashmarks](https://github.com/huyng/bashmarks) for the
-[Fish shell](https://fishshell.com/). Fishmarks is compatible with existing bashmarks,
-and bookmarks added using fishmarks are also available in bashmarks.
+Fishmarks lets you save and jump to frequently used directories in
+[Fish shell](https://fishshell.com/). It is fast, script-friendly, and compatible
+with existing [bashmarks](https://github.com/huyng/bashmarks) data.
+
+## Quickstart (15 seconds)
+
+```fish
+fisher install techwizrd/fishmarks
+s proj
+g proj
+l
+```
+
+- `s <name>` saves the current directory
+- `g <name>` jumps to a saved directory
+- `l` lists saved bookmarks
 
 ## Demo
 
@@ -103,6 +116,18 @@ git fetch --all
 ```fish
 git pull --ff-only
 ```
+
+## Compared to other directory-jump tools
+
+- Popular alternatives you might know:
+  - [zoxide](https://github.com/ajeetdsouza/zoxide): fast, frecency-based jumping across shells
+  - [autojump](https://github.com/wting/autojump): classic usage-history directory jumping
+  - [z](https://github.com/rupa/z): original "jump around" script that inspired later tools
+  - [z.lua](https://github.com/skywind3000/z.lua): modern Lua implementation with broad shell support
+- Use fishmarks when you want explicit, named bookmarks (`g work`, `g dotfiles`)
+- Use history/frecency tools when you want automatic ranking by usage
+
+Many users combine both: automatic jumping for exploration, fishmarks for stable project bookmarks.
 
 ## Usage
 
