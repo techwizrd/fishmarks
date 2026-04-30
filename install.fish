@@ -1,6 +1,7 @@
 #!/usr/bin/env fish
 set -l required_major 3
-set -l fish_major (string split . -- (status fish-version))[1]
+set -l fish_version (string replace -r '^fish, version ' '' -- (fish --version))
+set -l fish_major (string split . -- "$fish_version")[1]
 
 if test "$fish_major" -lt "$required_major"
     echo "Fish shell version $required_major or newer is required for this script. Get the latest version at https://fishshell.com/."

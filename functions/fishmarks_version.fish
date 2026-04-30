@@ -1,3 +1,3 @@
 function fishmarks_version --description "Print fishmarks version"
-    printf '%s\n' '0.2.0-dev'
+    printf '%s\n' '1.2.0'
 end

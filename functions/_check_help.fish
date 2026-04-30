@@ -11,8 +11,8 @@ function _check_help
         echo 'go_to_bookmark <bookmark_name> - Goes (cd) to the directory associated with "bookmark_name"'
         echo 'print_bookmark <bookmark_name> - Prints the directory associated with "bookmark_name"'
         echo 'delete_bookmark <bookmark_name> - Deletes the bookmark'
-        echo 'list_bookmarks [--names-only] - Lists all available bookmarks'
-        echo 'fishmarks_doctor - Checks bookmarks file for common issues'
+        echo 'list_bookmarks [--names-only] [--missing] - Lists available bookmarks'
+        echo 'fishmarks_doctor [--fix] [--yes] - Checks bookmarks file for common issues'
         if not set -q NO_FISHMARKS_COMPAT_ALIASES
             echo ''
             echo 'Compatibility aliases: s g p d l'
