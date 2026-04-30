@@ -4,10 +4,13 @@ function list_bookmarks --description "List all available bookmarks"
     end
 
     set -l names_only 0
+    set -l missing_only 0
     for arg in $argv
         switch "$arg"
             case --names-only
                 set names_only 1
+            case --missing
+                set missing_only 1
             case '*'
                 _fishmarks_print_error "unknown option '$arg'"
                 return 1
@@ -16,6 +19,9 @@ function list_bookmarks --description "List all available bookmarks"
 
     for entry in (_fishmarks_entries)
         set -l parts (string split -m 1 '=' -- "$entry")
+        if test $missing_only -eq 1; and test -d "$parts[2]"
+            continue
+        end
 
         if test $names_only -eq 1
             printf '%s\n' "$parts[1]"

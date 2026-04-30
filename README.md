@@ -140,8 +140,8 @@ bookmark_exists <bookmark_name> - Returns success if bookmark exists
 go_to_bookmark <bookmark_name> (or g) - Goes (cd) to the directory associated with "bookmark_name"
 print_bookmark <bookmark_name> (or p) - Prints the directory associated with "bookmark_name"
 delete_bookmark <bookmark_name> (or d) - Deletes the bookmark
-list_bookmarks [--names-only] (or l) - Lists all available bookmarks
-fishmarks_doctor - Checks bookmarks file for common issues
+list_bookmarks [--names-only] [--missing] (or l) - Lists available bookmarks
+fishmarks_doctor [--fix] [--yes] - Checks bookmarks file for common issues
 fishmarks_version - Prints the installed fishmarks version
 ```
 
@@ -165,6 +165,28 @@ webfolder            /var/www
 [/usr/local/lib]$ g webfolder
 [/var/www]$
 ```
+
+## Troubleshooting
+
+If fishmarks is not loading, commands are missing, or a bookmark is not working as expected, start with:
+
+```fish
+fishmarks_version
+fishmarks_doctor
+```
+
+- `fishmarks_version` confirms which version is installed.
+- `fishmarks_doctor` checks the bookmarks file for malformed entries, duplicate names, unsupported paths, and missing directories.
+- `fishmarks_doctor --fix` removes malformed and duplicate entries after confirmation. Missing-directory bookmarks are reported but preserved.
+
+Useful follow-ups:
+
+```fish
+l --missing
+fishmarks_doctor --fix
+```
+
+When opening an issue, include the output of both commands along with your Fish version and install method.
 
 ## Running tests
 

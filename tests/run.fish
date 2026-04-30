@@ -166,6 +166,31 @@ function _test_list_names_only
     _assert_status 1 $status 'names-only output does not include paths'
 end
 
+function _test_list_missing
+    _prepare_dir "$HOME/work/missing-existing"
+    save_bookmark missing_existing
+    _assert_status 0 $status 'save existing bookmark for missing filter succeeds'
+
+    _prepare_dir "$HOME/work/missing-target"
+    save_bookmark missing_gone
+    _assert_status 0 $status 'save missing bookmark for missing filter succeeds'
+    command rmdir -- "$HOME/work/missing-target"
+
+    set -l missing_output (list_bookmarks --missing)
+    _assert_status 0 $status 'list_bookmarks --missing succeeds'
+    string match -q '*missing_gone*' -- "$missing_output"
+    _assert_true $status 'missing output includes missing bookmark'
+    string match -q '*missing_existing*' -- "$missing_output"
+    _assert_status 1 $status 'missing output excludes existing bookmark'
+
+    set -l missing_names (list_bookmarks --missing --names-only)
+    _assert_status 0 $status 'list_bookmarks --missing --names-only succeeds'
+    contains -- missing_gone $missing_names
+    _assert_true $status 'missing names output includes missing bookmark name'
+    contains -- missing_existing $missing_names
+    _assert_status 1 $status 'missing names output excludes existing bookmark name'
+end
+
 function _test_argument_validation
     print_bookmark one two >/dev/null 2>/dev/null
     _assert_status 1 $status 'print_bookmark rejects extra arguments'
@@ -276,8 +301,7 @@ end
 function _test_version_command
     set -l version_output (fishmarks_version)
     _assert_status 0 $status 'fishmarks_version command succeeds'
-    string match -rq '^[0-9]+\.[0-9]+\.[0-9]+(-[A-Za-z0-9.-]+)?$' -- "$version_output"
-    _assert_true $status 'fishmarks_version returns semver-like output'
+    _assert_eq '1.2.0' "$version_output" 'fishmarks_version returns current release version'
 end
 
 function _test_conf_aliases
@@ -315,6 +339,33 @@ function _test_fishmarks_doctor
     fishmarks_doctor >/dev/null 2>/dev/null
     _assert_status 1 $status 'fishmarks_doctor reports malformed, duplicate, or missing directories'
 
+    set -l cancelled_output (printf 'n\n' | fishmarks_doctor --fix 2>/dev/null)
+    _assert_status 1 $status 'fishmarks_doctor --fix can be cancelled'
+    string match -q '*fix cancelled*' -- "$cancelled_output"
+    _assert_true $status 'cancelled fix reports cancellation'
+    set -l cancelled_file (string collect < "$SDIRS")
+    string match -q '*not a bookmark*' -- "$cancelled_file"
+    _assert_true $status 'cancelled fix leaves malformed line in place'
+
+    set -l applied_output (fishmarks_doctor --fix --yes 2>/dev/null)
+    _assert_status 1 $status 'fishmarks_doctor --fix --yes rewrites safe fixes and still reports remaining issues'
+    string match -q '*removed 2 malformed or duplicate entries*' -- "$applied_output"
+    _assert_true $status 'applied fix reports removed entry count'
+
+    set -l rewritten_file (string collect < "$SDIRS")
+    string match -q '*not a bookmark*' -- "$rewritten_file"
+    _assert_status 1 $status 'applied fix removes malformed lines'
+    set -l duplicate_lines (string match -r 'export DIR_dup=' -- (string split '\n' -- "$rewritten_file"))
+    _assert_eq 1 (count $duplicate_lines) 'applied fix keeps only one duplicate bookmark line'
+
+    set -gx SDIRS "$HOME/.sdirs_doctor_missing"
+    printf 'export DIR_missing_keep="\\$HOME/doctor/still-missing"\n' >"$SDIRS"
+    fishmarks_doctor --fix --yes >/dev/null 2>/dev/null
+    _assert_status 1 $status 'fishmarks_doctor --fix --yes leaves missing directories unresolved'
+    set -l missing_file (string collect < "$SDIRS")
+    string match -q '*DIR_missing_keep*' -- "$missing_file"
+    _assert_true $status 'fix preserves missing-directory bookmark lines'
+
     set -gx SDIRS "$original_sdirs"
 end
 
@@ -327,6 +378,7 @@ _test_bookmark_exists
 _test_legacy_file_compatibility
 _test_invalid_name_rejected
 _test_list_names_only
+_test_list_missing
 _test_argument_validation
 _test_shell_escaped_paths
 _test_rejects_newline_paths
